@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../UI/navigation_Bar.dart';
 import '../Widgets/sliver_content.dart';
 import '../Widgets/sliver_app_bar.dart';
-import '../Widgets/sliver_info.dart';
 import '../Widgets/sliver_list.dart';
 
 import '../Widgets/sliver_profile.dart';
@@ -50,7 +47,7 @@ class HomePage extends StatelessWidget {
           //sliver: 
         
         SliverPadding(
-          padding: EdgeInsets.only(top: 10,left: 20,right: 10),  
+          padding: EdgeInsets.only(top: 10,left: 0,right: 0,bottom: 10),  
           sliver: sliverContent()
         ),
         //),

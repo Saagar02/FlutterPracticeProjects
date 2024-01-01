@@ -14,7 +14,7 @@ class SliverListBldr extends StatelessWidget {
         SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return Padding(
-              padding: EdgeInsets.only(left: kSpacing, bottom: 20, right: 10),
+              padding: EdgeInsets.only(left: 10, bottom: 20, right: 10),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: kBorderRadius,

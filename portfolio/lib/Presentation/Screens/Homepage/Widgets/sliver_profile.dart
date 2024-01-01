@@ -11,8 +11,8 @@ class SliverProfile extends StatelessWidget {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       elevation: 0,
       pinned: true,
-      expandedHeight: 200,
-      toolbarHeight: 200,
+      expandedHeight: 180,
+      toolbarHeight: 180,
       
       flexibleSpace: FlexibleSpaceBar(
         background: Container(

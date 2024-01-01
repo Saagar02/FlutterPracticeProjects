@@ -31,8 +31,8 @@ class sliverContent extends StatelessWidget{
     return SliverAppBar(
       elevation: 0,
       pinned: true,
-      expandedHeight: 25,
-      toolbarHeight: 25,
+      expandedHeight: 60,
+      toolbarHeight: 60,
       
       flexibleSpace: FlexibleSpaceBar(
         background:Container(
@@ -41,7 +41,7 @@ class sliverContent extends StatelessWidget{
             child: 
             Container(
               height: 50,
-              width: 325,
+              width: 335,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -58,28 +58,31 @@ class sliverContent extends StatelessWidget{
                   )
                 ]
               ),
-              child: Row(
-                children: <Widget>[
-                  TextButton(
-                    onPressed: () => {}, 
-                    child: Text("Details")
-                  ),
-
-                  TextButton(
-                    onPressed: () => {}, 
-                    child: Text("Education")
-                  ),
-
-                  TextButton(
-                    onPressed: () => {}, 
-                    child: Text("Projects")
-                  ),
-
-                  TextButton(
-                    onPressed: () => {}, 
-                    child: Text("Experties\n & Skills")
-                  ),
-                ],
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () => {}, 
+                      child: Text("Details")
+                    ),
+              
+                    TextButton(
+                      onPressed: () => {}, 
+                      child: Text("Certifications")
+                    ),
+              
+                    /*TextButton(
+                      onPressed: () => {}, 
+                      child: Text("Projects")
+                    ),*/
+              
+                    TextButton(
+                      onPressed: () => {}, 
+                      child: Text("Key Experties")
+                    ),
+                  ],
+                ),
               ),
             ),
     
