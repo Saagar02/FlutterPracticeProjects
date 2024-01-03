@@ -26,6 +26,7 @@ class _MyButtomNavBarState extends State<MyBottomNavBar> {
       bottomNavigationBar: Container(
         height: 60,
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        
         decoration: BoxDecoration(
           boxShadow: [ BoxShadow(
               color: Colors.black.withOpacity(0.5),
@@ -36,8 +37,9 @@ class _MyButtomNavBarState extends State<MyBottomNavBar> {
           borderRadius: BorderRadius.circular(30),
           child: BottomNavigationBar(
               // backgroundColor: Colors.transparent,
-              selectedItemColor: Colors.redAccent,
-              unselectedItemColor: Colors.black,
+
+              selectedItemColor: Colors.white,
+              unselectedItemColor: Colors.white70,
               currentIndex: myCurrentIndex,
               onTap: (index) {
                 setState(() {
@@ -46,13 +48,13 @@ class _MyButtomNavBarState extends State<MyBottomNavBar> {
               },
               items: const [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home), label: "Home"),
+                  icon: Icon(Icons.home,size: 30.0,), label: "Home",backgroundColor: Colors.blue),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.book), label: "Education"),
+                  icon: Icon(Icons.book,size: 30.0,), label: "Education",backgroundColor: Colors.blue),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.file_copy), label: "Projects"),
+                  icon: Icon(Icons.file_copy,size: 30.0,), label: "Projects",backgroundColor: Colors.blue),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.person_outline), label: "Profile"),
+                  icon: Icon(Icons.person_outline,size: 30.0,), label: "Profile",backgroundColor: Colors.blue),
               ]),
         ),
       ),

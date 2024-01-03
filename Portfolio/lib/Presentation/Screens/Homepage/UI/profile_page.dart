@@ -51,6 +51,7 @@ class profilePage extends StatelessWidget {
         ),
         //),
         SliverPadding(
+          
           padding: EdgeInsets.symmetric(vertical: 0),   
           sliver : SliverListBldr()//contentDetails(),
                   //sliverInfo()

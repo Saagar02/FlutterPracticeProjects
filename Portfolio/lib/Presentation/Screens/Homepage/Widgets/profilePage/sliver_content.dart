@@ -62,12 +62,12 @@ class sliverContent extends StatelessWidget{
                 children: <Widget>[
                   TextButton(
                     onPressed: () => {}, 
-                    child: Text("Details",style: TextStyle(color: Colors.red.shade300,fontSize: 16,fontWeight: FontWeight.bold),)
+                    child: Text("Details",style: TextStyle(color: Colors.blue,fontSize: 16,fontWeight: FontWeight.bold),)
                   ),
             
                   TextButton(
                     onPressed: () => {}, 
-                    child: Text("Certifications",style: TextStyle(color: Colors.red.shade300,fontSize: 16,fontWeight: FontWeight.bold),)
+                    child: Text("Certifications",style: TextStyle(color:Colors.blue,fontSize: 16,fontWeight: FontWeight.bold),)
                   ),
             
                   /*TextButton(
@@ -77,7 +77,7 @@ class sliverContent extends StatelessWidget{
             
                   TextButton(
                     onPressed: () => {}, 
-                    child: Text("Key Experties",style: TextStyle(color: Colors.red.shade300,fontSize: 16,fontWeight: FontWeight.bold),)
+                    child: Text("Key Experties",style: TextStyle(color: Colors.blue,fontSize: 16,fontWeight: FontWeight.bold),)
                   ),
                 ],
               ),

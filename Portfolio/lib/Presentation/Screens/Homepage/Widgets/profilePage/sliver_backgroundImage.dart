@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class SliverBackgroundImage extends StatelessWidget {
@@ -13,14 +15,10 @@ class SliverBackgroundImage extends StatelessWidget {
       pinned: false,
       centerTitle: false,
       stretch: true,
-      expandedHeight: 180.0,
+      expandedHeight: 200.0,
+      toolbarHeight: 200,
       flexibleSpace: const FlexibleSpaceBar(
-        title: Text("Sagar Chaudhari",
-                style: TextStyle(
-                fontSize: 22,
-                color: Color.fromARGB(255, 212, 255, 0)
-              ),
-        ),
+        
         centerTitle: true,
         stretchModes: [StretchMode.zoomBackground],
         collapseMode: CollapseMode.parallax,
