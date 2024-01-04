@@ -46,7 +46,7 @@ class profilePage extends StatelessWidget {
           //sliver: 
         
         SliverPadding(
-          padding: EdgeInsets.only(top: 10,left: 0,right: 0,bottom: 10),  
+          padding: EdgeInsets.only(top: 5,left: 0,right: 0,bottom: 10),  
           sliver: sliverContent()
         ),
         //),
@@ -64,7 +64,6 @@ class profilePage extends StatelessWidget {
             ),  
             child: SliverListBldr(),
           ),
-         
         ),*/
         /*SliverList(
           delegate: DecoratedBox(

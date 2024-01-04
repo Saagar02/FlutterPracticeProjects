@@ -38,8 +38,7 @@ class sliverContent extends StatelessWidget{
       background:Container(
         color: const Color.fromARGB(255, 249, 249, 249),
         child: Center(
-          child: 
-          Container(
+          child:Container(
             height: 50,
             width: 335,
             decoration: const BoxDecoration(
@@ -54,11 +53,11 @@ class sliverContent extends StatelessWidget{
                   color: Color.fromARGB(73, 173, 159, 159),
                   spreadRadius: 3,
                   offset: Offset(0, -2.7)
-
                 )
               ]
             ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   TextButton(
                     onPressed: () => {}, 
@@ -77,7 +76,7 @@ class sliverContent extends StatelessWidget{
             
                   TextButton(
                     onPressed: () => {}, 
-                    child: Text("Key Experties",style: TextStyle(color: Colors.blue,fontSize: 16,fontWeight: FontWeight.bold),)
+                    child: Text("Experties",style: TextStyle(color: Colors.blue,fontSize: 16,fontWeight: FontWeight.bold),)
                   ),
                 ],
               ),

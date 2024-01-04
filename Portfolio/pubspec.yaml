@@ -65,6 +65,11 @@ flutter:
     - assets/Images/Profile.png
     - assets/Images/Selfie.png
     - assets/Images/Profile2.jpg
+    - assets/Images/profileBack.png
+    - assets/Images/Java.png
+    - assets/Images/C.jpg
+    - assets/Images/Cpp.png
+    - assets/Images/Os.png
 
   #   - images/a_dot_ham.jpeg
 
