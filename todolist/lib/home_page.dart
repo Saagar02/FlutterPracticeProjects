@@ -12,29 +12,40 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isBVisible = true;
-  bool _isImportant = false;
+  final bool _isImportant = false;
   final bool _isCompleted = false;
+  List? selectedTodo = notCompletodoList;
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _statusController = TextEditingController();
+  final TextEditingController _listController = TextEditingController();
+
   Color? _selectedColor;
 
-  static List<ToDoModelClass> todoList = [
-  ToDoModelClass(
-    title: "Take notes",
-    description: "Take notes of every app you write ",
-    date: "10 July 2023",
-    time: "12:30",
-    category: "Personal",
-    selectedColor: Colors.yellow.shade200,
-    isImportant : true,
-    isCompleted: false,
-  ),
+  static List<List> listTodoList =[
+    notCompletodoList,
+    completedTodoList,
+    deletedTodoList,
+  ];
+
+  static List<ToDoModelClass> todoList =[
+    ToDoModelClass(
+      title: "Not Complete ToDo 1",
+      description: "Take notes of every app you write ",
+      date: "10 July 2023",
+      time: "12:30",
+      category: "Personal",
+      selectedColor: Colors.yellow.shade200,
+      isImportant : true,
+      isCompleted: false,
+      todoStatus: "Not Completed",
+    ),
 
   ToDoModelClass(
-    title: "Arrange Meeting ",
+    title: "Not Complete ToDo 2",
     description: "Meet the backend team ",
     date: "10 July 2023",
     time: "12:30",
@@ -42,14 +53,73 @@ class _HomePageState extends State<HomePage> {
     selectedColor: Colors.green.shade200,
     isImportant: false,
     isCompleted: false,
+    todoStatus: "Not Completed",
   ),
-];
+  ToDoModelClass(
+    title: "Completed Todo 1",
+    description: "Take notes of every app you write ",
+    date: "10 July 2023",
+    time: "12:30",
+    category: "Personal",
+    selectedColor: Colors.red.shade200,
+    isImportant : true,
+    isCompleted: true,
+    todoStatus: "Completed",
+  ),
+
+  ToDoModelClass(
+    title: "Completed Todo 2",
+    description: "Meet the backend team ",
+    date: "10 July 2023",
+    time: "12:30",
+    category: "Work",
+    selectedColor: Colors.blue.shade200,
+    isImportant: false,
+    isCompleted: true,
+    todoStatus: "Completed",
+  ),
+  ToDoModelClass(
+    title: "Deleted Todo 1",
+    description: "Take notes of every app you write ",
+    date: "10 July 2023",
+    time: "12:30",
+    category: "Personal",
+    selectedColor: Colors.green.shade200,
+    isImportant : true,
+    isCompleted: true,
+    todoStatus: "Deleted",
+  ),
+
+  ToDoModelClass(
+    title: "Deleted Todo 2",
+    description: "Meet the backend team ",
+    date: "10 July 2023",
+    time: "12:30",
+    category: "Work",
+    selectedColor: Colors.blue.shade200,
+    isImportant: false,
+    isCompleted: true,
+    todoStatus: "Deleted",
+  ),
+  ];
+  
+  static List<ToDoModelClass> allTodoList = notCompletodoList + completedTodoList;
+  static List<ToDoModelClass> importantTodoList = todoList.where((ToDoModelClass) => ToDoModelClass.isImportant == true).toList();
+  static List<ToDoModelClass> notCompletodoList = todoList.where((ToDoModelClass) => ToDoModelClass.todoStatus == "Not Completed").toList();
+  static List<ToDoModelClass> completedTodoList = todoList.where((ToDoModelClass) => ToDoModelClass.todoStatus == "Completed").toList();
+  static List<ToDoModelClass> deletedTodoList = todoList.where((ToDoModelClass) => ToDoModelClass.todoStatus == "Deleted").toList();
+
+  final Map<String, int> dropdownValue = {
+    'Not Completed': 0,
+    'Completed': 1,
+    'Deleted': 2,
+  };
 
   void submitButton(bool isEdit , [ToDoModelClass? todoObj]){
     if(_titleController.text.trim().isNotEmpty && _descriptionController.text.isNotEmpty && _dateController.text.isNotEmpty && _timeController.text.isNotEmpty){
       if(!isEdit){
         setState(() {
-          todoList.add(
+          notCompletodoList.add(
             ToDoModelClass(
               title: _titleController.text.trim(), 
               description: _descriptionController.text.trim(), 
@@ -58,7 +128,8 @@ class _HomePageState extends State<HomePage> {
               category: _categoryController.text.trim(),
               selectedColor: _selectedColor!,
               isImportant: _isImportant,
-              isCompleted: _isCompleted,   
+              isCompleted: _isCompleted,
+              todoStatus: "Not Completed",   
             )
           );
         });
@@ -71,6 +142,7 @@ class _HomePageState extends State<HomePage> {
           todoObj.category = _categoryController.text.trim();
           todoObj.selectedColor = _selectedColor!;
           todoObj.isImportant = _isImportant;
+          todoObj.isCompleted = _isCompleted;
         });
       }
     }
@@ -87,10 +159,45 @@ class _HomePageState extends State<HomePage> {
   
   void deletToDo(ToDoModelClass toDoObj){
     setState(() {
-      todoList.remove(toDoObj);
+      toDoObj.todoStatus = "Deleted";
+      selectedTodo!.remove(toDoObj);
     });
   }
 
+  void isImportant(ToDoModelClass toDoObj){
+    setState(() {
+
+      if(toDoObj.isCompleted == false){
+        toDoObj.isImportant == true ? toDoObj.isImportant = false : toDoObj.isImportant = true ;
+        if(toDoObj.isImportant == true){
+          importantTodoList.add(toDoObj);
+        }else{
+          importantTodoList.remove(toDoObj);
+        }
+      }  
+    });
+  }
+
+  void completeTodo(ToDoModelClass toDoObj){
+
+    if(toDoObj.todoStatus == "Not Completed"){
+      completedTodoList.add(toDoObj);
+      notCompletodoList.remove(toDoObj);
+    }else{
+      completedTodoList.remove(toDoObj);
+      notCompletodoList.add(toDoObj);
+    }
+    toDoObj.isCompleted == false ? toDoObj.isCompleted = true : toDoObj.isCompleted =    false; 
+    toDoObj.todoStatus == "Not Completed"? toDoObj.todoStatus = "Completed" : toDoObj.todoStatus = "Not Completed";
+    
+  }
+
+  void changeTodoList(ToDoModelClass toDoObj){
+    toDoObj.isCompleted ? completedTodoList.add(toDoObj) : notCompletodoList.add(toDoObj);
+    toDoObj.isCompleted ? toDoObj.todoStatus = "Completed" : toDoObj.todoStatus = "Not Completed";
+    toDoObj.isCompleted ? toDoObj.isCompleted = true : toDoObj.isCompleted = false;
+    deletedTodoList.remove(toDoObj);
+  }
   void editToDo(ToDoModelClass todoObj){
     _titleController.text = todoObj.title;
     _descriptionController.text = todoObj.description;
@@ -587,154 +694,211 @@ class _HomePageState extends State<HomePage> {
     );
   }
   
-  Widget todos(int index){
+  Widget todos(int index , List todo){
     Image image ;
-    if(todoList[index].category == 'Work'){
+    if(todo[index].category == 'Work'){
       image = Image.asset("images/work.png");
-    }else if(todoList[index].category == 'Home'){
+    }else if(todo[index].category == 'Home'){
       image = Image.asset("images/home.png");
     }else{
       image = Image.asset("images/personal.png");
     }
     return Padding(
       padding: const EdgeInsets.symmetric( vertical: 8),
-      child: Container(
-        decoration: BoxDecoration(
-          color: todoList[index].selectedColor,
-          boxShadow: const [
-            BoxShadow(
-              offset: Offset(0, 10),
-              color: Color.fromRGBO(0, 0, 0, 0.1),
-              blurRadius: 10,
-            )
-          ],
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(right: 10 , left: 10 , top: 5 , bottom: 5),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 70,
-                    width: 70,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                    ),
-                    child: image
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              todoList[index].title,
-                              maxLines: null,
-                              style:TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                color: const Color.fromRGBO(0, 0, 0, 1),
-                                decoration: todoList[index].isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
-                              ),
-                            ),
-                            const Spacer(),
-                            Checkbox(
-                              value: todoList[index].isCompleted, 
-                              onChanged: (bool ? value){
-                                setState(() {
-                                  todoList[index].isCompleted = !todoList[index].isCompleted;
-                                });
-                              }
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          todoList[index].description,
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: const Color.fromRGBO(84, 84, 84, 1),
-                            decoration: todoList[index].isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  
-                ],
-              ),
-              const SizedBox(height: 10,),
-              const Divider(
-                color: Color.fromRGBO(72, 72, 72, 1), 
-                thickness: 1.0,
-                height: 2,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                child: Row(
+      child: GestureDetector(
+        onLongPress: () {
+          setState(() {
+            isImportant(todo[index]);
+          });
+        },
+        child: Container(
+          
+          decoration: BoxDecoration(
+            color: todo[index].selectedColor,
+            boxShadow: const [
+              BoxShadow(
+                offset: Offset(0, 10),
+                color: Color.fromRGBO(0, 0, 0, 0.1),
+                blurRadius: 10,
+              )
+            ],
+            borderRadius: BorderRadius.circular(10),
+            border: todo[index].isImportant? Border.all(
+              color: Color.fromRGBO(212, 175, 55, 1),
+              width: 4
+            ) : null
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8 , left: 8 , top: 5 , bottom: 5),
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    Text(
-                      todoList[index].date,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color:Color.fromRGBO(72, 72, 72, 1),
+                    Container(
+                      height: 65,
+                      width: 60,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
                       ),
+                      child: image
                     ),
-                    const Spacer(),
-                    Text(
-                      todoList[index].time,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color:Color.fromRGBO(72, 72, 72, 1),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                                width: 184,
+                                child: ListView(
+                                  children: [
+                                    Text(
+                                      todo[index].title,
+                                      maxLines: null,
+                                      style:TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                        color: const Color.fromRGBO(0, 0, 0, 1),
+                                        decoration: todo[index].todoStatus == "Completed" ? TextDecoration.lineThrough : TextDecoration.none,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Spacer(),
+                              
+                              todo[index].todoStatus != "Deleted" ? Checkbox(
+                                value: todo[index].todoStatus == "Completed", 
+                                onChanged: (bool ? value){
+                                  setState(() {
+                                    completeTodo(todo[index]);
+                                  });
+                                }
+                              ) :
+                              Container(
+                                height: 30,
+                                width: 50,
+                                decoration:BoxDecoration(
+                                  gradient:const LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                    Color(0xFF667EEA), 
+                                    Color(0xFF794BCB),
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: GestureDetector(
+                                  onTap: ()=>(
+                                    setState(() {
+                                      changeTodoList(todo[index]);
+                                    },)
+                                  ),
+                                  child: const Center(
+                                    child: Text("Undo",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            todo[index].description,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: const Color.fromRGBO(84, 84, 84, 1),
+                              decoration: todo[index].todoStatus == "Completed" ? TextDecoration.lineThrough : TextDecoration.none,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     
-                    const Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        todoList[index].isCompleted == false ? GestureDetector(
-                          onTap: () {
-                            editToDo(todoList[index]);
-                          },
-                          child: const Icon(
-                            Icons.edit_outlined,
-                            size: 28,
-                            color: Color.fromRGBO(84, 84, 84, 1)//Color.fromRGBO(0, 139, 148, 1),
-                          ),
-                        ) : const SizedBox.shrink(),
-                        const SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: () {
-                            deletToDo(todoList[index]);
-                          },
-                          child: const Icon(
-                            Icons.delete_outline,
-                            size: 28,
-                            color: Color.fromRGBO(84, 84, 84, 1)//Color.fromRGBO(0, 139, 148, 1),
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
-              ),
-            ],
+                const SizedBox(height: 10,),
+                const Divider(
+                  color: Color.fromRGBO(72, 72, 72, 1), 
+                  thickness: 1.0,
+                  height: 2,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        todo[index].date,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color:Color.fromRGBO(72, 72, 72, 1),
+                        ),
+                      ),
+                      const Spacer(),
+                      Text(
+                        todo[index].time,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color:Color.fromRGBO(72, 72, 72, 1),
+                        ),
+                      ),
+                      
+                      const Spacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          todo[index].todoStatus == "Not Completed" ? GestureDetector(
+                            onTap: () {
+                              editToDo(todo[index]);
+                            },
+                            child: const Icon(
+                              Icons.edit_outlined,
+                              size: 28,
+                              color: Color.fromRGBO(84, 84, 84, 1)//Color.fromRGBO(0, 139, 148, 1),
+                            ),
+                          ) : const SizedBox.shrink(),
+                          const SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                todo != deletedTodoList ? deletedTodoList.add(todo[index]): null;
+                                deletToDo(todo[index]);
+                              });
+                            },
+                            child: const Icon(
+                              Icons.delete_outline,
+                              size: 28,
+                              color: Color.fromRGBO(84, 84, 84, 1)//Color.fromRGBO(0, 139, 148, 1),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+  
   @override
   Widget build(BuildContext context){
+    
     return Scaffold(
       appBar: AppBar(
         title:Row(
@@ -778,37 +942,120 @@ class _HomePageState extends State<HomePage> {
           }
           return true;
         },
-        child: Container(
-          /*decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Color(0xFF667EEA), 
-                Color(0xFF794BCB)], 
-              ),
-          ),*/
-          child: todoList.isEmpty ? Align(
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+        child:Padding(
+            padding:const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+            child:Column(
               children: [
-                Image.asset('images/Task Done png.png',height: 125,),
-                const Text("All Tasks Completed",
-                  style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25),
+                Container(
+                  height: 40,
+                  color: Colors.transparent,
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap:(){
+                          setState(() {
+                            _listController.text = "All";
+                            selectedTodo = allTodoList;
+                          });
+                        },
+                        child:Text("All",style: TextStyle(
+                          decoration: _listController.text == "All" ? TextDecoration.underline : null,
+                          decorationColor: const Color.fromARGB(255, 56, 81, 194),
+                          decorationThickness: 2,
+                          color: const Color.fromARGB(255, 56, 81, 194),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500
+                        ),),
+                      ),
+                      const SizedBox(width: 10,),
+                      Container(
+                        height: 20,
+                        width: 2,
+                        color: const Color.fromARGB(255, 56, 81, 194),
+                      ),
+                      const SizedBox(width: 10,),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _listController.text = "Important";
+                            selectedTodo = importantTodoList;
+                          });
+                        },
+                        child:Text("Important",style: TextStyle(
+                          decoration: _listController.text == "Important" ? TextDecoration.underline : null,
+                          decorationColor: const Color.fromARGB(255, 56, 81, 194),
+                          decorationThickness: 2,
+                          color: const Color.fromARGB(255, 56, 81, 194),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500
+                        ),),
+                      ),
+                      const Spacer(),
+                      DropdownButton<String>(
+                        value: _statusController.text == '' ? "Not Completed" :_statusController.text,
+                        elevation: 0,
+                        icon: const Icon(Icons.arrow_drop_down , color: Color.fromARGB(255, 56, 81, 194),),
+                        iconSize: 24,
+                        style:const TextStyle(color: Color.fromARGB(255, 56, 81, 194), fontSize: 18),
+                        onChanged: (String? newValue) {
+                          if(newValue != null){
+                            int? intValue = dropdownValue[newValue];
+                            if(intValue != null){
+                              setState(() {
+                                selectedTodo = listTodoList[intValue];
+                                _statusController.text = newValue;
+                              });
+                            }
+                          }
+                        },
+                        items: dropdownValue.keys.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value,style:const TextStyle(
+                              color: Color.fromARGB(255, 56, 81, 194),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500
+                            ),),
+                          );
+                        }).toList(),
+                    ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: selectedTodo!.isNotEmpty ?  ListView.builder(
+                    itemBuilder: (context,index){
+                      return todos(index , selectedTodo!);
+                    },
+                    itemCount: selectedTodo!.length,
+                  ): 
+                  Align(
+                    alignment: Alignment.center,
+                    child: selectedTodo == notCompletodoList ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset('images/Task Done png.png',height: 125,),
+                        const Text("All Tasks Completed",
+                          style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25),
+                        ),
+                      ],
+                    ) :
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset('images/Task not Done.png',height: 125,),
+                        const Text("No Task Completed",
+                          style: TextStyle(fontWeight: FontWeight.w500,fontSize: 25),
+                        ),
+                      ],
+                    ) 
+                  ) 
                 ),
               ],
-            )
-          ): Padding(
-              padding:const EdgeInsets.all(15),
-              child:ListView.builder(
-                itemBuilder: (context,index){
-                  return todos(index);
-                },
-                itemCount: todoList.length,
-              ),
-          ),
+            ),
         ),
       ),
+      
       floatingActionButton: Visibility(
         visible: _isBVisible,
         child: Align(
@@ -819,7 +1066,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () =>(
                 showbottomSheet(false)
               ),
-              backgroundColor: Color.fromARGB(255, 114, 138, 248),
+              backgroundColor: const Color.fromARGB(255, 114, 138, 248),
               child: const Icon(Icons.add),            
             ),
           ),

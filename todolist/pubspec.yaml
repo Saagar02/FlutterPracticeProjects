@@ -69,6 +69,8 @@ flutter:
     - images/home.png
     - images/personal.png
     - images/work.png
+    - images/Task not Done.png
+    - images/Star.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

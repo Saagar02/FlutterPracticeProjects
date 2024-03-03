@@ -9,6 +9,7 @@ class ToDoModelClass {
   Color selectedColor;
   bool isImportant;
   bool isCompleted;
+  String todoStatus = "Not Completed";
   ToDoModelClass({
     required this.title,
     required this.description,
@@ -17,6 +18,7 @@ class ToDoModelClass {
     required this.selectedColor,
     required this.isImportant,
     required this.isCompleted,
+    required this.todoStatus,
     required this.category,
   });
 }
