@@ -13,12 +13,10 @@ class MyApp extends StatelessWidget {
       title: 'To Do App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(  seedColor: const Color.fromARGB(53, 168, 93, 249)),
         useMaterial3: true,
       ),
       home:
-      //const BottomSheet1(), 
-      const HomePage()
+        const HomePage()
     );
   }
 }
